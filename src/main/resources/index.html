@@ -1,0 +1,62 @@
+<HTML xmlns="http://www.w3.org/1999/xhtml">
+<HEAD>
+    <!--
+        You can load everything from web and don't store local,
+        but i prefer this variant because of speed
+        you will also have to add path fixing code in java class.
+        like this :
+
+        html = html.replace("highlightScript.js",
+               getClass().getResource("highlightScript.js").toExternalForm());
+
+    -->
+
+    <link type="text/css" rel="stylesheet" href="/prettify.css"/>
+    <script type="text/javascript" src="/prettify.js"></script>
+
+    <script type="text/javascript" src="/jquery-2.1.4.min.js"></script>
+
+</HEAD>
+
+<BODY style="word-wrap: break-word;" onload="prettyPrint()">
+
+<pre class="prettyprint"></pre>
+
+<span id="dummy"/> <!-- need this for easy colour compare in highlightScript.js-->
+<script>
+    function update(text) {
+        $("pre").text(text)
+    }
+    function highlight(text) {
+        var color = "yellow";
+        $("#dummy").css('color', color);
+
+        unhighlight(document.body, color);
+        searchAndHighlight(text, color);
+    }
+
+    function searchAndHighlight(text, colour) {
+        if (window.find) {
+            if (window.getSelection) {
+                document.designMode = "on";
+                var sel = window.getSelection();
+                sel.collapse(document.body, 0);
+
+                while (window.find(text)) {
+                    document.execCommand("HiliteColor", false, colour);
+                    sel.collapseToEnd();
+                }
+                document.designMode = "off";
+            }
+        }
+    }
+
+    function unhighlight() {
+        $("span").filter(function () {
+            return $(this).css('background-color') == $('#dummy').css('color');
+        }).contents().unwrap();
+    }
+</script>
+</BODY>
+
+</HTML>

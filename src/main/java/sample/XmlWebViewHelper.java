@@ -30,7 +30,7 @@ public class XmlWebViewHelper {
 
     private String template;
 
-    public XmlWebViewHelper() {
+    public XmlWebViewHelper(WebView webView) {
         template = readFile(getResource(TEMPLATE_HTML_PATH).getPath());
         // for some reason relative paths in index.html
         // don't work and i had to fix them this way:
@@ -42,14 +42,12 @@ public class XmlWebViewHelper {
 
     public void highlight(WebView webView, String text) {
         if (text == null) text = "";
-        logDocument(webView);
         webView.getEngine().executeScript("highlight('" + text + "')");
     }
 
     public void setXML(WebView webView, String xml) {
         if (xml == null) xml = "";
         try {
-
             webView.getEngine().loadContent(formattedXML(xml));
         } catch (IOException e) {
             e.printStackTrace();
@@ -155,5 +153,4 @@ public class XmlWebViewHelper {
         }
         return "";
     }
-
 }

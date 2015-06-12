@@ -9,17 +9,19 @@ import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
 public class Main extends Application {
-    private static final String DEMO_XML = "<home>" +
+    static final String DEMO_XML = "<home>" +
             "<person name=\"Bob\"></person>" +
             "<person name=\"Bob\">Some long person data is here:gogog ogogogogog ogogogo gogogogog ogogogogogg gggggg ggggggg</person>" +
             "</home>";
-    private static final String DEMO_XML3 = "<home></home>";
-    private static final String DEMO_XML2 = XmlWebViewHelper.readFile(XmlWebViewHelper.class.getResource("/index.html").getPath());
+
+    static final String DEMO_XML3 = "<home></home>";
+    static final String DEMO_XML2 = XmlWebViewHelper.readFile(XmlWebViewHelper.class.getResource("/index.html").getPath());
+
     @Override
     public void start(Stage primaryStage) throws Exception{
         final WebView webView = new WebView();
 
-        XmlWebViewHelper xmlLoader = new XmlWebViewHelper();
+        XmlWebViewHelper xmlLoader = new XmlWebViewHelper(webView);
         xmlLoader.setXML(webView, DEMO_XML);
 
         TextField textField = new TextField();
